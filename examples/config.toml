@@ -1,0 +1,32 @@
+# pipeline objects
+do_classification = true
+do_evaluation = true
+do_export = true
+# path to export dir
+export_path = './examples/results/'
+
+# dataset configuration
+[dataset]
+# path to data file (.csv)
+path = './examples/data.csv'
+# column containing src text
+text_column = 'text'
+# column containing gold label (only if do_evaluation)
+gold_column = 'topic'
+# (optional) batch size used during classification
+batch_size = 2
+
+# classifier configuration
+[classify]
+# label for export, slug/url from hugging face hub
+models = [
+    ["flan-t5-small", "google/flan-t5-small"],
+    ["mt0-small", "bigscience/mt0-small"],
+]
+# {classes}, {text} are dynamically replaced during runtime
+templates = [
+    ["base", "Categorize the following tweet into one of the listed classes {classes}:\n'''{text}'''"],
+    ["trans", "Ordne den folgenden Tweet in eine der aufgelisteten Kategorien ein {classes}:\n'''{text}'''"],
+]
+# list of classes to use
+classes = ["Wirtschaft", "Migration", "Demokratie", "Ukraineunterstützung", "Energiewende"]
